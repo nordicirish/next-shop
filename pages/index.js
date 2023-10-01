@@ -1,16 +1,19 @@
 import Head from "next/head";
 import Title from "../components/Title";
-const products = [
-  {
-    id: 1,
-    title: "Product 1",
-  },
-  {
-    id: 2,
-    title: "Product 2",
-  },
-];
-function HomePage() {
+import { getProducts } from "../lib/products";
+
+export async function getStaticProps() {
+  const products = await getProducts();
+  return {
+    props: {
+      products,
+    },
+    //incrmental static regeneration only works in production
+    // reloads data every 30 seconds
+    revalidate: 30,
+  };
+}
+function HomePage({ products }) {
   console.log("[HomePage] render", products);
   return (
     <>
