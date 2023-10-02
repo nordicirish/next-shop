@@ -10,7 +10,9 @@ export async function getStaticPaths() {
         id: product.id.toString(),
       },
     })),
-    fallback: false,
+    //generates new page while client waits for server to
+    //return the page - prevents 404 error for new products
+    fallback: "blocking",
   };
 }
 
