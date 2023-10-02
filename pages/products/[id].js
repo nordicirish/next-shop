@@ -17,12 +17,19 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { id } }) {
-  const product = await getProduct(id);
-  return {
-    props: {
-      product,
-    },
-  };
+  try {
+    const product = await getProduct(id);
+    return {
+      props: {
+        product,
+      },
+    };
+  } catch (error) {
+    // return 404 page if product not found
+    return {
+      notFound: true,
+    };
+  }
 }
 
 export default function ProductPage({ product }) {
