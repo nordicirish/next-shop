@@ -8,9 +8,6 @@ export async function getStaticProps() {
     props: {
       products,
     },
-    //incremental static regeneration only works in production
-    // reloads data every 30 seconds
-    revalidate: 30,
   };
 }
 function HomePage({ products }) {

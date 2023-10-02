@@ -20,9 +20,6 @@ export async function getStaticProps({ params: { id } }) {
     props: {
       product,
     },
-    // use same revalidate interval on all pages
-    // to ensure pages are updated at the same time
-    revalidate: 30,
   };
 }
 
