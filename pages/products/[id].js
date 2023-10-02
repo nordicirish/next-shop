@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { ApiError } from "@/lib/api";
 import Title from "@/components/Title";
 import { getProducts, getProduct } from "@/lib/products";
 export async function getStaticPaths() {
@@ -26,9 +27,15 @@ export async function getStaticProps({ params: { id } }) {
     };
   } catch (error) {
     // return 404 page if product not found
-    return {
-      notFound: true,
-    };
+    if (error instanceof ApiError && error.status === 404) {
+      return {
+        notFound: true,
+      };
+    }
+    // a
+    // throw error if it's a different error
+    // like cms is down
+    throw error;
   }
 }
 
