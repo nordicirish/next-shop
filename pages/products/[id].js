@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import { ApiError } from "@/lib/api";
 import Title from "@/components/Title";
 import { getProducts, getProduct } from "@/lib/products";
@@ -46,7 +47,22 @@ export default function ProductPage({ product }) {
       <Head></Head>
       <main className="px-6 py-4">
         <Title>{product.title}</Title>
-        <p>{product.description}</p>
+        <div className="flex flex-col lg:flex-row">
+          {/* need to wrap Image in div to prevent flexbox from 
+          stretching image */}
+          <div>
+            <Image
+              src={product.pictureUrl}
+              alt={product.title}
+              width={640}
+              height={480}
+            />
+          </div>
+          <div className="flex-1 lg:ml-4">
+            <p>{product.description}</p>
+            <p className="text-lg font-bold mt-2">{product.price}</p>
+          </div>
+        </div>
       </main>
     </>
   );
