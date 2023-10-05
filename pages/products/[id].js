@@ -1,8 +1,8 @@
-import Head from "next/head";
+import Page from "../Page";
 import Image from "next/image";
 import { ApiError } from "@/lib/api";
-import Title from "@/components/Title";
 import { getProducts, getProduct } from "@/lib/products";
+
 export async function getStaticPaths() {
   const products = await getProducts();
   return {
@@ -44,9 +44,7 @@ export default function ProductPage({ product }) {
   console.log("[ProductPage] render", product);
   return (
     <>
-      <Head></Head>
-      <main className="px-6 py-4">
-        <Title>{product.title}</Title>
+      <Page title={product.title}>
         <div className="flex flex-col lg:flex-row">
           {/* need to wrap Image in div to prevent flexbox from 
           stretching image */}
@@ -63,7 +61,7 @@ export default function ProductPage({ product }) {
             <p className="text-lg font-bold mt-2">{product.price}</p>
           </div>
         </div>
-      </main>
+      </Page>
     </>
   );
 }
