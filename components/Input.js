@@ -1,7 +1,10 @@
-export default function Input({ type }) {
+export default function Input({ type, value, onChange }) {
   return (
-    <div className="flex flex-col mb-4">
-      <input type={type} className="border rounded px-3 py-1 w-80" />
-    </div>
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      className="border rounded px-3 py-1 w-80"
+    />
   );
 }
