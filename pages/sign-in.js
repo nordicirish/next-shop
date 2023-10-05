@@ -7,6 +7,7 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (event) => {
+    event.preventDefault();
     console.log("Submit:", { email, password });
   };
   return (
