@@ -16,15 +16,17 @@ export default function SignInPage() {
         <Field label="Email">
           <Input
             type="email"
+            required
             value={email}
-            onchange={(event) => setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
         </Field>
         <Field label="Password">
           <Input
             type="password"
             value={password}
-            onchange={(event) => setPassword(event.target.value)}
+            required
+            onChange={(event) => setPassword(event.target.value)}
           />
         </Field>
         <Button type="submit">Sign In</Button>
