@@ -1,14 +1,28 @@
 import Link from "next/link";
-const user = { name: "Alice" };
+import { useEffect, useState } from "react";
+import { fetchJson } from "../lib/api";
+
 export default function NavBar() {
+  const [user, setUser] = useState();
+  useEffect(() => {
+    (async () => {
+      try {
+        const user = await fetchJson("/api/user");
+        setUser(user);
+      } catch (err) {
+        // not signed in
+      }
+    })();
+  }, []);
+
+  console.log("[NavBar] user:", user);
   return (
     <nav className="px-2 py-1 text-sm">
       <ul className="flex gap-2">
         <li className="text-lg font-extrabold">
-          <Link href="/">Home</Link>
+          <Link href="/">Next Shop</Link>
         </li>
         <li role="separator" className="flex-1" />
-        {/* spacing li role separator for accessibility */}
         {user ? (
           <>
             <li>{user.name}</li>

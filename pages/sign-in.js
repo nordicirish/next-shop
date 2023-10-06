@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Input from "../components/Input";
 import Field from "@/components/Field";
 import Button from "@/components/Button";
-import Page from "./Page";
+import Page from "@/components/Page";
 import { fetchJson } from "@/lib/api";
 
 // simulate a slow network
@@ -11,6 +12,7 @@ import { fetchJson } from "@/lib/api";
 // }
 
 export default function SignInPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState({ loading: false, error: false });
@@ -27,6 +29,8 @@ export default function SignInPage() {
       });
       setStatus({ loading: false, error: false });
       console.log("sign in", response);
+      // redirect to home page after sign in
+      router.push("/");
     } catch (error) {
       setStatus({ loading: false, error: true });
     }

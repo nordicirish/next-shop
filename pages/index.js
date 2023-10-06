@@ -1,4 +1,4 @@
-import Page from "./Page";
+import Page from "@/components/Page";
 import { getProducts } from "../lib/products";
 import ProductCard from "@/components/ProductCard";
 
@@ -11,7 +11,7 @@ export async function getStaticProps() {
   };
 }
 function HomePage({ products }) {
-  console.log("[HomePage] render", products);
+  // console.log("[HomePage] render", products);
   return (
     <>
       <Page title="Indoor Plants">
