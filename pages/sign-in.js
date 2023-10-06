@@ -3,12 +3,19 @@ import Input from "../components/Input";
 import Field from "@/components/Field";
 import Button from "@/components/Button";
 import Page from "./Page";
+import { fetchJson } from "@/lib/api";
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submit:", { email, password });
+    const response = await fetchJson("http://localhost:1337/auth/local", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier: email, password: password }),
+    });
+    console.log("sign in", response);
   };
   return (
     <Page title="Sign In">
