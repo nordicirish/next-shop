@@ -1,8 +1,9 @@
 import { fetchJson } from "@/lib/api";
 
-const CMS_URL = process.env;
+const CMS_URL = process.env.CMS_URL;
+console.log(CMS_URL);
 
-export async function handleUser(req, res) {
+export default async function handleUser(req, res) {
   const { jwt } = req.cookies;
   if (!jwt) {
     res.status(401).end();
