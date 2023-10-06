@@ -1,4 +1,5 @@
 import { fetchJson } from "../../lib/api";
+const { CMS_URL } = process.env;
 export default async function handleLogin(req, res) {
   if (req.method !== "POST") {
     res.status(405).end();
@@ -8,7 +9,7 @@ export default async function handleLogin(req, res) {
   const { email, password } = req.body;
   // destructing jwt and user from response
   try {
-    const { jwt, user } = await fetchJson("http://localhost:1337/auth/local", {
+    const { jwt, user } = await fetchJson(`${CMS_URL}/auth/local`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ identifier: email, password: password }),
