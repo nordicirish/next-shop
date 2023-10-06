@@ -1,9 +1,25 @@
-export default function handleLogin(req, res) {
+import { fetchJson } from "../../lib/api";
+export default async function handleLogin(req, res) {
   if (req.method !== "POST") {
     res.status(405).end();
     //return to prevent rest of function from running
     return;
   }
-  console.log("login", req.body);
-  res.status(200).json({});
+  const { email, password } = req.body;
+  // destructing jwt and user from response
+  try {
+    const { jwt, user } = await fetchJson("http://localhost:1337/auth/local", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier: email, password: password }),
+    });
+    //TODO: store jwt in cookie
+    res.status(200).json({
+      id: user.id,
+      name: user.username,
+    });
+  } catch (error) {
+    // return 401 unauthorised - if login fails
+    res.status(401).end();
+  }
 }
