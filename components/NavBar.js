@@ -1,15 +1,10 @@
 import Link from "next/link";
-import { fetchJson } from "../lib/api";
-import { useUser } from "@/hooks/user";
+import { useUser, useSignOut } from "@/hooks/user";
 
 export default function NavBar() {
   // use custom hook useUser
   const user = useUser();
-  const handleSignOut = async () => {
-    await fetchJson("/api/logout");
-    // set to undefined as is the initial state of user
-    // setUser(undefined);
-  };
+  const signOut = useSignOut();
 
   console.log("[NavBar] user:", user);
   return (
@@ -23,7 +18,7 @@ export default function NavBar() {
           <>
             <li>{user.name}</li>
             <li>
-              <button onClick={handleSignOut}>Sign Out</button>
+              <button onClick={signOut}>Sign Out</button>
             </li>
           </>
         ) : (

@@ -32,6 +32,18 @@ export function useSignIn() {
     siginLoading: mutation.isLoading,
   };
 }
+export function useSignOut() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(() => fetchJson("/api/logout"));
+  return async () => {
+    await mutation.mutateAsync();
+    // updates user data in cache
+    // user is the key for the query
+    // updates the navbar immediately to show user and signout
+    queryClient.setQueryData(USER_QUERY_KEY, undefined);
+  };
+}
+
 export function useUser() {
   //"user" is the key for the query
   const query = useQuery(
