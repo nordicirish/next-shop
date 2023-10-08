@@ -15,6 +15,12 @@ export default function NavBar() {
     })();
   }, []);
 
+  const handleSignOut = async () => {
+    await fetchJson("/api/logout");
+    // set to undefined as is the initial state of user
+    setUser(undefined);
+  };
+
   console.log("[NavBar] user:", user);
   return (
     <nav className="px-2 py-1 text-sm">
@@ -27,7 +33,7 @@ export default function NavBar() {
           <>
             <li>{user.name}</li>
             <li>
-              <button>Sign Out</button>
+              <button onClick={handleSignOut}>Sign Out</button>
             </li>
           </>
         ) : (
