@@ -1,31 +1,10 @@
 import Link from "next/link";
-
 import { fetchJson } from "../lib/api";
-import { useQuery } from "react-query";
+import useUser from "@/hooks/user";
 
 export default function NavBar() {
-  //"user" is the key for the query
-  const query = useQuery(
-    "user",
-    async () => {
-      try {
-        return await fetchJson("/api/user");
-      } catch (err) {
-        return undefined;
-        // not signed in
-      }
-    },
-    // options object
-    {
-      //user state is cached indefinitely
-      cacheTime: Infinity,
-      // user data is fresh for 30 seconds and won't be refetched
-      // prevents unnecessary refetching
-      staleTime: 30000,
-    }
-  );
-  const user = query.data;
-
+  // use custom hook useUser
+  const user = useUser();
   const handleSignOut = async () => {
     await fetchJson("/api/logout");
     // set to undefined as is the initial state of user
