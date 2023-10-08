@@ -1,6 +1,7 @@
 import Page from "@/components/Page";
 import Image from "next/image";
 import { ApiError } from "@/lib/api";
+import useUser from "@/hooks/user";
 import { getProducts, getProduct } from "@/lib/products";
 
 export async function getStaticPaths() {
@@ -42,6 +43,9 @@ export async function getStaticProps({ params: { id } }) {
 
 export default function ProductPage({ product }) {
   console.log("[ProductPage] render", product);
+  // use custom hook useUser to get user data
+  const user = useUser();
+  console.log("[ProductPage] user:", user);
   return (
     <>
       <Page title={product.title}>
@@ -59,6 +63,7 @@ export default function ProductPage({ product }) {
           <div className="flex-1 lg:ml-4">
             <p>{product.description}</p>
             <p className="text-lg font-bold mt-2">{product.price}</p>
+            <p> Special offer only for {user.name}!!</p>
           </div>
         </div>
       </Page>
