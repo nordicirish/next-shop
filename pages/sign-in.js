@@ -6,7 +6,8 @@ import Button from "@/components/Button";
 import Page from "@/components/Page";
 import { fetchJson } from "@/lib/api";
 // useMutation is a react-query hook used to make request that modify data
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import { useSignIn } from "@/hooks/user";
 
 // simulate a slow network
 // function sleep(ms) {
@@ -17,28 +18,15 @@ export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // useMutation is called in an async function
-  const mutation = useMutation(() =>
-    fetchJson("api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    })
-  );
+  // use custom hook useSignIn + destructuring to get signInError and signInLoading
+  const { signIn, signInError, signInLoading } = useSignIn();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // await sleep(2000);
-
-    try {
-      // call mutation
-      // api response is user object
-      const user = await mutation.mutateAsync();
-      console.log("sign in", user);
-      // redirect to home page after sign in
+    const valid = await signIn(email, password);
+    if (valid) {
+      //only redirect if sign in is successful
       router.push("/");
-    } catch (error) {
-      // no need to set as mutation.isError will be true;
     }
   };
   return (
@@ -60,11 +48,9 @@ export default function SignInPage() {
             onChange={(event) => setPassword(event.target.value)}
           />
         </Field>
-        {mutation.isError && (
-          <p className="text-red-700">Invalid credentials</p>
-        )}
+        {signInError && <p className="text-red-700">Invalid credentials</p>}
         {/* //hide button when loading */}
-        {mutation.isLoading ? (
+        {signInLoading ? (
           <p>Loading...</p>
         ) : (
           <Button type="submit">Sign In</Button>
