@@ -1,24 +1,35 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
 import { fetchJson } from "../lib/api";
+import { useQuery } from "react-query";
 
 export default function NavBar() {
-  const [user, setUser] = useState();
-  useEffect(() => {
-    (async () => {
+  //"user" is the key for the query
+  const query = useQuery(
+    "user",
+    async () => {
       try {
-        const user = await fetchJson("/api/user");
-        setUser(user);
+        return await fetchJson("/api/user");
       } catch (err) {
+        return undefined;
         // not signed in
       }
-    })();
-  }, []);
+    },
+    // options object
+    {
+      //user state is cached indefinitely
+      cacheTime: Infinity,
+      // user data is fresh for 30 seconds and won't be refetched
+      // prevents unnecessary refetching
+      staleTime: 30000,
+    }
+  );
+  const user = query.data;
 
   const handleSignOut = async () => {
     await fetchJson("/api/logout");
     // set to undefined as is the initial state of user
-    setUser(undefined);
+    // setUser(undefined);
   };
 
   console.log("[NavBar] user:", user);
