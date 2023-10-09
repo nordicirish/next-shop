@@ -1,11 +1,14 @@
 import Page from "@/components/Page";
 import Image from "next/image";
 import { ApiError } from "@/lib/api";
+import { useUser } from "@/hooks/user";
+import AddToCartWidget from "../AddToCartWidget";
 // import useUser from "@/hooks/user";
 import { getProducts, getProduct } from "@/lib/products";
 
 export async function getStaticPaths() {
   const products = await getProducts();
+
   return {
     paths: products.map((product) => ({
       params: {
@@ -64,6 +67,7 @@ export default function ProductPage({ product }) {
             <p>{product.description}</p>
             <p className="text-lg font-bold mt-2">{product.price}</p>
             {/* <p> Special offer only for {user.name}!!</p> */}
+            {user && <AddToCartWidget productId={product.id} />}
           </div>
         </div>
       </Page>
