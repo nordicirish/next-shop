@@ -2,8 +2,18 @@ GET http://localhost:3000/api/products
 ###
 
 GET http://localhost:1337/cart-items
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk2NTA3NjI4LCJleHAiOjE2OTkwOTk2Mjh9.x2JAYhm0t8-vaRdhUgNHzb-gRJNgzxWsy-R1K5jTSKU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk2ODM5NDcwLCJleHAiOjE2OTk0MzE0NzB9.N5OepRi2IbnQEr46bj3bFB0MwM88viZ2kJ1TWWdwukE
+###
 
+# no need to send user as jwt identifies the user
+post http://localhost:1337/cart-items
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk2ODM5NDcwLCJleHAiOjE2OTk0MzE0NzB9.N5OepRi2IbnQEr46bj3bFB0MwM88viZ2kJ1TWWdwukE
+Content-Type: application/json
+
+{
+    "product": 2,
+    "quantity": 1
+}
 ###
 
 GET http://localhost:1337/users/me
