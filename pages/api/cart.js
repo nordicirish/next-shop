@@ -3,7 +3,7 @@ import { fetchJson } from "@/lib/api";
 // destructuring the CMS_URL from the environment variables
 const { CMS_URL } = process.env;
 // stripCartItems function to remove unnecessary data from cart items
-function stripCartItems(cartItem) {
+function stripCartItem(cartItem) {
   return {
     id: cartItem.id,
     product: {
@@ -25,7 +25,7 @@ async function handleGetCart(req, res) {
     const cartItems = await fetchJson(`${CMS_URL}/cart-items`, {
       headers: { Authorization: `Bearer ${jwt}` },
     });
-    res.status(200).json(cartItems.map(stripCartItems));
+    res.status(200).json(cartItems.map(stripCartItem));
   } catch (err) {
     res.status(401).end();
   }
@@ -45,7 +45,7 @@ async function handlePostCart(req, res) {
         Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ productId, quantity }),
+      body: JSON.stringify({ product: productId, quantity }),
     });
     res.status(200).json({});
   } catch (err) {
