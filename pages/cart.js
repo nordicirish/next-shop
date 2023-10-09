@@ -8,10 +8,6 @@ export default function CartPage() {
   const cartItems = query.data;
   console.log("[CartPage]", cartItems);
   return (
-    <Page title="Cart">
-      {cartItems && <CartTable cartItems={cartItems} />}
-
-      <p>Cart</p>
-    </Page>
+    <Page title="Cart">{cartItems && <CartTable cartItems={cartItems} />}</Page>
   );
 }
